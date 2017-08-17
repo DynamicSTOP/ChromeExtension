@@ -1,5 +1,4 @@
 function Screenshot(){
-    this.gamebox = {};
     this.canvas = {};
     this.context = {};
     this.domImg = {};
@@ -14,8 +13,8 @@ Screenshot.prototype.setCallback = function(callback){
 Screenshot.prototype.prepare = function(){
     // Initialize HTML5 Canvas
     this.canvas = document.createElement("canvas");
-    this.canvas.width = 800 * this.scale;
-    this.canvas.height = 480 * this.scale;
+    this.canvas.width = 800;
+    this.canvas.height = 480;
     this.context = this.canvas.getContext("2d");
 
     // Initialize Image Tag
@@ -36,36 +35,23 @@ Screenshot.prototype.remoteCapture = function(){
             format: "png",
             quality: 100
         }, function(base64img){
-            self.domImg.onload = self.crop(self.offset);
+            self.domImg.onload = function(){self.crop(self.offset)};
             self.domImg.src = base64img;
         });
     });
 };
 
 Screenshot.prototype.crop = function(offset){
-    // Get zoom factor
-    chrome.tabs.getZoom(null, function(zoomFactor){
-        // Get gamebox dimensions and position
-        var params = {
-            realWidth: 800 * zoomFactor,
-            realHeight: 480 * zoomFactor,
-            offTop: offset.top * zoomFactor,
-            offLeft: offset.left * zoomFactor,
-        };
-
-        // Actual Cropping
-        self.context.drawImage(
-            self.domImg,
-            params.offLeft,
-            params.offTop,
-            params.realWidth,
-            params.realHeight,
-            0,
-            0,
-            800,
-            480
-        );
-
-        self.output();
-    });
+    this.context.drawImage(
+        this.domImg,
+        offset.left ,
+        offset.top ,
+        800,
+        480,
+        0,
+        0,
+        800,
+        480
+    );
+    this.output();
 };

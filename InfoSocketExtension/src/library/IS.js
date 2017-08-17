@@ -1,6 +1,10 @@
+console.log("IS started");
+
 chrome.runtime.onMessage.addListener(function (request, sender, response) {
     if (request.identifier != "IS_IS") return true;
+    if (typeof request.url !== "undefined" && window.location.href !== request.url) return true;
     if (typeof request.action == "undefined") return true;
+
 
     switch (request.action) {
         case "getWinParams":
@@ -25,10 +29,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, response) {
             break;
 
         case "getGamescreenOffset":
-                response({
-                    top: $("#area-game").offset().top,
-                    left: $("#area-game").offset().left
-                });
+                response($("#area-game").offset());
             break;
 
         default:

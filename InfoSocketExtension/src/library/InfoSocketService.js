@@ -15,7 +15,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
         // Check requested action is supported
         if (typeof window.InfoSocketService[request.action] != "undefined") {
             // Execute and pass callback to function
-            window.InfoSocketService[request.action](request, sender, callback);
+            chrome.tabs.get(request.tabId,function(tabDetails){
+                request.url = tabDetails.url;
+                window.InfoSocketService[request.action](request, sender, callback);
+            });
             return true; // dual-async response
         } else {
             // Unknown action
@@ -33,7 +36,7 @@ window.InfoSocketService = {
             // Get tab information to get URL of requester
             chrome.tabs.get(request.tabId, function (tabDetails) {
                 // If not API or DMM Frame, must be special mode
-                screenshotSpecialMode(request.tabId, response);
+                screenshotSpecialMode(request, response);
                 return true;
             });
         } else {
@@ -42,12 +45,12 @@ window.InfoSocketService = {
         return true;
     },
     "getWinParams": function(request,sender,response) {
-        (new IS_TMsg(request.tabId, "IS", "getWinParams", {}, function(ISResponse){
+        (new IS_TMsg(request.tabId, "IS", "getWinParams", {url:request.url}, function(ISResponse){
             response(ISResponse);
         })).execute();
     },
     "execCommand": function(request,sender,response){
-        (new IS_TMsg(request.tabId, "IS", "execCommand", {execCommand:request.execCommand},
+        (new IS_TMsg(request.tabId, "IS", "execCommand", {url:request.url, execCommand:request.execCommand},
             function(ISResponse){
                 response(ISResponse);
             })
@@ -60,13 +63,13 @@ function isDevtools(url){
     return url.indexOf("/pages/devtools") > -1;
 }
 
-function screenshotSpecialMode(tabId, response){
-    (new IS_TMsg(tabId, "IS", "getGamescreenOffset", {}, function(offset){
+function screenshotSpecialMode(request, response){
+    (new IS_TMsg(request.tabId, "IS", "getGamescreenOffset", {url:request.url}, function(offset){
         let s = new Screenshot();
             s.setCallback(response);
             s.output=function(){
                 response(s.canvas.toDataURL("image/png",20));
             };
-            s.remoteStart(tabId, offset);
+            s.remoteStart(request.tabId, offset);
     })).execute();
 }

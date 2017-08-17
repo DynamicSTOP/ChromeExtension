@@ -35,9 +35,10 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.dmm.com/*"],
+      "matches": ["*://*.dmm.com/my/*/login/*/path=*"],
       "js": [
         "assets/js/jquery.min.js",
+        "library/Messengers.js",
         "library/IS.js"
       ],
       "run_at": "document_end",
