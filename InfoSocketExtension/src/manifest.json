@@ -1,0 +1,61 @@
+{
+  "manifest_version": 2,
+  "name": "InfoSocket",
+  "short_name": "IS",
+  "description": "InfoSocket app that will transmit data and execute commands over WebSocket",
+  "version": "0.1",
+  "devtools_page": "pages/devtools/devtools.html",
+  "options_page": "pages/settings/settings.html",
+  "icons": {
+    "16": "assets/img/WebSocketsLogo16.png",
+    "48": "assets/img/WebSocketsLogo48.png",
+    "128": "assets/img/WebSocketsLogo128.png",
+    "512": "assets/img/WebSocketsLogo512.png"
+  },
+  "browser_action": {
+    "default_icon": "assets/img/WebSocketsLogo48.png",
+    "default_popup": "pages/popup/popup.html"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "cookies",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": [
+      "assets/js/jquery.min.js",
+      "library/Screenshot.js",
+      "library/Messengers.js",
+      "library/InfoSocketService.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.dmm.com/*"],
+      "js": [
+        "assets/js/jquery.min.js",
+        "library/IS.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["*://www.dmm.com/netgame/*/app_id=854854*"],
+      "js": [
+        "assets/js/jquery.min.js",
+        "library/Messengers.js",
+        "library/IS.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    "assets/img/*"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
