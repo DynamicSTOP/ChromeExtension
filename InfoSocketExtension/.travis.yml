@@ -1,0 +1,37 @@
+sudo: false
+dist: trusty
+language: node_js
+node_js:
+- "6"
+before_install:
+- npm install -g grunt-cli
+- npm install
+# - patch -N -d node_modules/grunt-contrib-uglify -p2 < misc/uglify-harmony.patch
+
+# BUILD WEBSTORE PACKAGE
+before_script:
+#- npm test
+
+# DEPLOY TO CHROME WEBSTORE
+script:
+- if [ $TRAVIS_BRANCH == 'webstore_test' ]; then grunt webstore; fi
+
+#deploy:
+#  provider: releases
+#  skip_cleanup: true
+#  api_key: $GITHUB_API_KEY
+#  file:
+#    - build/release.zip
+#  on:
+#    tags: false
+#    branch: webstore_test
+#    condition: $TRAVIS_PULL_REQUEST == "false"
+
+# BUILD NOTIFICATION FOR GITTER
+#notifications:
+#  webhooks:
+#    urls:
+#    - https://webhooks.gitter.im/e/e8964a721dd35fd96e46
+#    on_success: change
+#    on_failure: change
+#    on_start: never

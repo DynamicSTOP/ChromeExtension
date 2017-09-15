@@ -1,0 +1,26 @@
+{
+  "name": "chrometestextension",
+  "version": "1.0.0",
+  "description": "test big extension",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DynamicSTOP/ChromeExtension.git"
+  },
+  "devDependencies": {
+    "grunt": "0.4.5",
+    "grunt-contrib-compress": "1.1.1",
+    "grunt-contrib-copy": "~0.8.1",
+    "load-grunt-tasks": "^3.5.2",
+    "grunt-webstore-upload": "KC3Kai/grunt-webstore-upload#master"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DynamicSTOP/ChromeExtension/issues"
+  },
+  "homepage": "https://github.com/DynamicSTOP/ChromeExtension#readme"
+}
