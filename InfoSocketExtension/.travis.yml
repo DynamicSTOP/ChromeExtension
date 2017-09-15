@@ -4,6 +4,7 @@ language: node_js
 node_js:
 - "6"
 before_install:
+- cd InfoSocketExtension
 - npm install -g grunt-cli
 - npm install
 # - patch -N -d node_modules/grunt-contrib-uglify -p2 < misc/uglify-harmony.patch
@@ -14,7 +15,7 @@ before_script:
 
 # DEPLOY TO CHROME WEBSTORE
 script:
-- if [ $TRAVIS_BRANCH == 'webstore_test' ]; then grunt webstore; fi
+- if [ $TRAVIS_BRANCH == 'webstore_test' ]; then cd InfoSocketExtension && grunt webstore; fi
 
 #deploy:
 #  provider: releases
