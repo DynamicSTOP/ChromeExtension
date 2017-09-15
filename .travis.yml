@@ -15,7 +15,7 @@ before_script:
 
 # DEPLOY TO CHROME WEBSTORE
 script:
-- if [ $TRAVIS_BRANCH == 'webstore_test' ]; then cd InfoSocketExtension && grunt webstore; fi
+- if [ $TRAVIS_BRANCH == 'webstore_test' ]; then grunt webstore; fi
 
 #deploy:
 #  provider: releases
