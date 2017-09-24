@@ -3,7 +3,7 @@
   "name": "InfoSocket",
   "short_name": "IS",
   "description": "InfoSocket app that will transmit data and execute commands over WebSocket",
-  "version": "0.1",
+  "version": "0.2",
   "devtools_page": "pages/devtools/devtools.html",
   "options_page": "pages/settings/settings.html",
   "icons": {
