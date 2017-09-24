@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         }
     });
     grunt.registerTask('webstore', [
-        'copy:small',
+        'copy:huge',
         'compress:release',
         'webstore_upload:testext'
     ]);
